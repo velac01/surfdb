@@ -1,6 +1,8 @@
 import pandas as pd
 import glob
 
+from tqdm import tqdm
+
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
@@ -8,6 +10,7 @@ from sqlalchemy.orm import mapped_column
 
 path = "data/cwe"
 csv_files = glob.glob(path + "/*.csv")
+
 
 class Base(DeclarativeBase):
     pass
@@ -33,11 +36,18 @@ def prepop_cwe_data(session):
     df_list = (pd.read_csv(file, index_col=False) for file in csv_files)
     # Concatenate all DataFrames
     raw_cwe_df = pd.concat(df_list, ignore_index=True)
-    clean_cwe_df = raw_cwe_df[
-        ["ID", "Name", "Status", "Description", "Related Weaknesses"]
-    ].drop_duplicates(subset=["ID"]).fillna("N/A")
+    clean_cwe_df = (
+        raw_cwe_df[["ID", "Name", "Status", "Description", "Related Weaknesses"]]
+        .drop_duplicates(subset=["ID"])
+        .fillna("N/A")
+    )
     cwes = []
-    for index, row in clean_cwe_df.iterrows():
+    for index, row in tqdm(
+        clean_cwe_df.iterrows(),
+        desc="Parsing CWEs",
+        colour="green",
+        total=len(clean_cwe_df.index),
+    ):
         id = row["ID"]
         name = row["Name"]
         description = row["Description"]

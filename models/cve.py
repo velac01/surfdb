@@ -3,13 +3,13 @@ import json
 from io import BytesIO
 import requests
 
-
-import pandas as pd 
+from tqdm import tqdm
 
 from sqlalchemy import String, Integer, Float
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+
 
 JSON_DATA = "../data/nvdcve-1.1-2021.json.gz"
 
@@ -32,26 +32,32 @@ class Cve(Base):
         self.cvss2_score = cvss2_score
 
     def __repr__(self):
-        return f"(CVE ID: {self.cve_id}) | Desc: {self.description} | CVSSv3: {self.cvss3_score} | CVSSv2: {self.cvss2_score}\n\n"
+        return f"(CVE ID: {self.cve_id}) | Desc: {self.description} \nCVSSv3: {self.cvss3_score} | CVSSv2: {self.cvss2_score}\n\n"
 
 
 if __name__ == "__main__":
-    with gzip.open(JSON_DATA, 'r') as f:
+    with gzip.open(JSON_DATA, "r") as f:
         raw = f.read()
-    items = json.loads(raw.decode('utf-8'))["CVE_Items"]
-    for i in range(10):
+    items = json.loads(raw.decode("utf-8"))["CVE_Items"]
+
+    for i in tqdm(range(len(items)), desc="Parsing CVEs", colour='#00ff00', total=len(items)):
         curr_cve = items[i]
         curr_cve_id = curr_cve["cve"]["CVE_data_meta"]["ID"]
-        print(curr_cve_id)
-        curr_cve_description = curr_cve["cve"]["description"]["description_data"][0]["value"]
+        curr_cve_description = curr_cve["cve"]["description"]["description_data"][0][
+            "value"
+        ]
         # Parse Rejects
-        if "** REJECT **" in curr_cve_description: 
-            print("REJECT")
+        if "** REJECT **" in curr_cve_description:
+            # print("REJECT")
             continue
         impact = curr_cve.get("impact")
         if impact != {}:
-            curr_cve_cvss3 = curr_cve["impact"]["baseMetricV3"]["cvssV3"]["baseScore"]
-            curr_cve_cvss2 = curr_cve["impact"]["baseMetricV2"]["cvssV2"]["baseScore"]
+            curr_cve_cvss3 = impact.get("baseMetricV3")
+            curr_cve_cvss2 = impact.get("baseMetricV2")
+            if curr_cve_cvss3 is not None: 
+                curr_cve_cvss3 = curr_cve_cvss3["cvssV3"]["baseScore"]
+            if curr_cve_cvss2 is not None: 
+                curr_cve_cvss2 = curr_cve_cvss2["cvssV2"]["baseScore"]
         else:
             curr_cve_cvss3, curr_cve_cvss2 = None, None
         print(
@@ -59,6 +65,6 @@ if __name__ == "__main__":
                 cve_id=curr_cve_id,
                 description=curr_cve_description,
                 cvss3_score=curr_cve_cvss3,
-                cvss2_score=curr_cve_cvss2
+                cvss2_score=curr_cve_cvss2,
             )
         )
