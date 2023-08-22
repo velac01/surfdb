@@ -17,8 +17,7 @@ DB_CONFIG = {
 
 def start_engine():
     engine = create_engine(
-        url=f"mysql+mysqlconnector://{DB_CONFIG['username']}:{DB_CONFIG['password']}@{DB_CONFIG['url']}/{DB_CONFIG['name']}",
-        echo=True,
+        url=f"mysql+mysqlconnector://{DB_CONFIG['username']}:{DB_CONFIG['password']}@{DB_CONFIG['url']}/{DB_CONFIG['name']}"
     )
     return engine
 

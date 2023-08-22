@@ -5,7 +5,7 @@ import glob
 
 import pandas as pd
 
-from sqlalchemy import Integer
+from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -27,7 +27,7 @@ class CweCveMap(Base):
         Integer, primary_key=True, autoincrement=True
     )
     cwe_id: Mapped[int] = mapped_column(Integer)
-    cve_id: Mapped[int] = mapped_column(Integer)
+    cve_id: Mapped[str] = mapped_column(String)
 
     def __init__(self, cwe_id, cve_id) -> None:
         self.cwe_id = cwe_id
