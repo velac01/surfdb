@@ -18,6 +18,10 @@ SurfDB is the database that will power the surfaceer application.
     ```sh 
     git clone https://github.com/velac01/surfdb.git
     ```
+2. Ensure you are in the correct directory 
+    ```sh
+    cd surfdb
+    ```
 2. Create a virtual environment (Recommended but Optional) 
     ```sh
     python -m venv ./env
