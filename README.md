@@ -22,11 +22,15 @@ SurfDB is the database that will power the surfaceer application.
     ```sh
     python -m venv ./env
     ```
-3. Install the required modules 
+3. Start the virtual environment 
+    ```sh
+    ./env/Scripts/Activate
+    ```
+4. Install the required modules 
     ```sh
     pip install -r ./requirements.txt
     ```
-4. Add .env file to repository and add variables 
+5. Add .env file to repository and add variables 
     ```dosini
     DB_USER_NAME=<DB_USER_NAME>
     DB_PASS_WORD=<DB_PASS_WORD>
@@ -34,6 +38,7 @@ SurfDB is the database that will power the surfaceer application.
     DB_NAME=<DB_NAME>
     ```
 ### Prepopulate the database 
+- Be sure have run the surfdb DDL before running the following command
 - Adding data to the database can be done by running the following command 
     ```sh
     python main.py
@@ -49,3 +54,4 @@ SurfDB is the database that will power the surfaceer application.
 - Insert the CWE/CAPEC Mapping (Done)
 - Refactor db.py to be it's own module (Done)
 - Add all the CWEs - Use pandas to drop duplicate IDs when reading in all the CWE csv files (Done)
+- Refactor! This will be good for Austin :) 
