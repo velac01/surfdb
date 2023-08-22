@@ -1,7 +1,6 @@
 import re
-
-
-import glob 
+import glob
+from tqdm import tqdm
 
 import pandas as pd
 
@@ -13,7 +12,6 @@ from sqlalchemy.orm import mapped_column
 
 path = "data/cwe"
 csv_files = glob.glob(path + "/*.csv")
-
 
 
 class Base(DeclarativeBase):
@@ -59,7 +57,12 @@ def prepop_cwe_cve_data(session):
     raw_cwe_df = pd.concat(df_list, ignore_index=True)
     clean_cwe_df = raw_cwe_df[["ID", "Observed Examples"]]
     ccms = []
-    for index, row in clean_cwe_df.iterrows():
+    for index, row in tqdm(
+        clean_cwe_df.iterrows(),
+        desc="Writing CWE CVE Map",
+        colour="green",
+        total=len(clean_cwe_df.index),
+    ):
         id = row["ID"]
         oes = row["Observed Examples"]
         if not pd.isna(oes):
@@ -72,5 +75,4 @@ def prepop_cwe_cve_data(session):
                         curr = CweCveMap(cwe_id=id, cve_id=word)
                         ccms.append(curr)
                         break
-    print(f"Adding {len(ccms)} {type(ccms[0])} to the database...")
     session.add_all(ccms)

@@ -1,3 +1,5 @@
+from tqdm import tqdm
+
 import pandas as pd
 
 from sqlalchemy import String, Integer
@@ -44,7 +46,12 @@ def prepop_capec_data(session):
         ["ID", "Name", "Status", "Description", "Related Weaknesses"]
     ].fillna("N/A")
     capecs = []
-    for index, row in clean_capec_df.iterrows():
+    for index, row in tqdm(
+        clean_capec_df.iterrows(),
+        desc="Writing CAPECs",
+        colour="green",
+        total=len(clean_capec_df.index),
+    ):
         id = row["ID"]
         name = row["Name"]
         status = row["Status"]

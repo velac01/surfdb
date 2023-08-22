@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import pandas as pd
 
 from sqlalchemy import Integer
@@ -33,7 +34,12 @@ def prepop_capec_cwe_data(session):
     raw_capec_df = pd.read_csv(data, index_col=False)
     clean_capec_df = raw_capec_df[["ID", "Related Weaknesses"]]
     ccms = []
-    for index, row in clean_capec_df.iterrows():
+    for index, row in tqdm(
+        clean_capec_df.iterrows(),
+        desc="Writing CAPEC CWE Map",
+        colour="green",
+        total=len(clean_capec_df.index),
+    ):
         id = row["ID"]
         rws = row["Related Weaknesses"]
         if not pd.isna(rws):

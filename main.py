@@ -16,7 +16,6 @@ if __name__ == "__main__":
     print("Connecting to DB....")
     eng = start_engine()
     session = create_session(eng)
-    print(session)
     print("Connected to DB!")
     sleep(1)
     
@@ -24,19 +23,19 @@ if __name__ == "__main__":
     # CAPECs
     print("Prepopulating CAPECs...")
     prepop_capec_data(session)
-    print("\n\nCAPECs added")
+    print("CAPECs added")
 
     sleep(2)
 
     # CWEs
     print("Prepopulating CWEs...")
     prepop_cwe_data(session)
-    print("\n\nCWEs added")
+    print("CWEs added")
 
     session.commit()
 
     # CVEs
-    print("Prepopulating CVEs")
+    print("Prepopulating CVEs...")
     year = 2002
     while(year <= 2023):
         prepop_cve_data(year, session)
@@ -44,20 +43,20 @@ if __name__ == "__main__":
     print("CVEs added")
     sleep(2)
 
-    print("Added Structure Tables...")
+    print("\nAdded structure Tables...")
     sleep(3)
-    print("Adding mapping tables...")
+    print("Adding mapping tables...\n")
 
     #  CAPEC CWE MAP
     print("Prepopulating CAPEC and CWE mapping...")
     prepop_capec_cwe_data(session)
-    print("\n\nCAPECs and CWE mapping added")
+    print("CAPECs and CWE mapping added")
     sleep(2)
 
     # CWE CVE MAP
     print("Prepopulating CWE and CAPEC mapping ...")
     prepop_cwe_cve_data(session)
-    print("\n\nCWE and CVE mapping added")
+    print("CWE and CVE mapping added")
 
     session.commit()
     session.close()
