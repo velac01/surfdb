@@ -34,8 +34,9 @@ class Cve(Base):
     def __repr__(self):
         return f"(CVE ID: {self.cve_id}) | Desc: {self.description} \nCVSSv3: {self.cvss3_score} | CVSSv2: {self.cvss2_score}\n\n"
 
+# Added the validation for 2002 instead of 1999
 def load_cve_json_by_year(year):
-    if int(year) > 2023 or int(year) < 1999: 
+    if int(year) > 2023 or int(year) < 2002: 
         print("Invalid Year")
         exit()
     JSON_DATA = f"data/cve/nvdcve-1.1-{year}.json.gz"
