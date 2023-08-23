@@ -34,6 +34,9 @@ class CweCveMap(Base):
     def __repr__(self):
         return f"(CWE ID: {self.cwe_id}) | (CVE ID: {self.cve_id})\n\n"
 
+    def __eq__(self, other):
+        return self.cwe_id == other.cwe_id and self.cve_id == other.cve_id
+
 
 def is_valid_cve(cve_string):
     """
@@ -73,6 +76,8 @@ def prepop_cwe_cve_data(session):
                 for word in lstr:
                     if is_valid_cve(word):
                         curr = CweCveMap(cwe_id=id, cve_id=word)
-                        ccms.append(curr)
-                        break
+                        if curr not in ccms:
+                            print("Hi")
+                            ccms.append(curr)
+                        continue
     session.add_all(ccms)

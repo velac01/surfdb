@@ -21,37 +21,37 @@ if __name__ == "__main__":
     
     print("Beginning Initiation...")
     # CAPECs
-    print("Prepopulating CAPECs...")
-    prepop_capec_data(session)
-    print("CAPECs added")
+    # print("Prepopulating CAPECs...")
+    # prepop_capec_data(session)
+    # print("CAPECs added")
 
-    sleep(2)
+    # sleep(2)
 
-    # CWEs
-    print("Prepopulating CWEs...")
-    prepop_cwe_data(session)
-    print("CWEs added")
+    # # CWEs
+    # print("Prepopulating CWEs...")
+    # prepop_cwe_data(session)
+    # print("CWEs added")
 
-    session.commit()
+    # session.commit()
 
-    # CVEs
-    print("Prepopulating CVEs...")
-    year = 2002
-    while(year <= 2023):
-        prepop_cve_data(year, session)
-        year = year + 1
-    print("CVEs added")
-    sleep(2)
+    # # CVEs
+    # print("Prepopulating CVEs...")
+    # year = 2002
+    # while(year <= 2023):
+    #     prepop_cve_data(year, session)
+    #     year = year + 1
+    # print("CVEs added")
+    # sleep(2)
 
-    print("\nAdded structure Tables...")
-    sleep(3)
-    print("Adding mapping tables...\n")
+    # print("\nAdded structure Tables...")
+    # sleep(3)
+    # print("Adding mapping tables...\n")
 
-    #  CAPEC CWE MAP
-    print("Prepopulating CAPEC and CWE mapping...")
-    prepop_capec_cwe_data(session)
-    print("CAPECs and CWE mapping added")
-    sleep(2)
+    # #  CAPEC CWE MAP
+    # print("Prepopulating CAPEC and CWE mapping...")
+    # prepop_capec_cwe_data(session)
+    # print("CAPECs and CWE mapping added")
+    # sleep(2)
 
     # CWE CVE MAP
     print("Prepopulating CWE and CAPEC mapping ...")
