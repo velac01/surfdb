@@ -1,4 +1,5 @@
-# SurfDB
+![SurfDB Logo](./static/SurfDB-Logo.png)
+
 SurfDB is the database that will power the surfaceer application.
 
 ## Getting started 
