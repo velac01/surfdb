@@ -77,7 +77,6 @@ def prepop_cwe_cve_data(session):
                     if is_valid_cve(word):
                         curr = CweCveMap(cwe_id=id, cve_id=word)
                         if curr not in ccms:
-                            print("Hi")
                             ccms.append(curr)
                         continue
     session.add_all(ccms)
