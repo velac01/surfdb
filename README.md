@@ -36,7 +36,7 @@ SurfDB is the database that will power the surfaceer application.
     ```sh
     pip install -r ./requirements.txt
     ```
-5. Add .env file to repository and add variables 
+5. Add .env file to the repository and add variables 
     ```dosini
     DB_USER_NAME=<DB_USER_NAME>
     DB_PASS_WORD=<DB_PASS_WORD>
@@ -45,7 +45,7 @@ SurfDB is the database that will power the surfaceer application.
     ```
 
 ### Prerequistes (MAC Version) 
-### You can use Homebrew, pip or pipx, whivhever you prefere!
+### You can use Homebrew, pip or pipx, whichever you prefer!
 1. Install python version 3.6+
     ```sh
     brew install python3 
