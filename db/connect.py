@@ -14,13 +14,24 @@ DB_CONFIG = {
     "name": os.getenv("DB_NAME"),
 }
 
-
+"""def start_engine():
+        engine = create_engine(
+        url=f"mysql+mysqlconnector://{DB_CONFIG['username']}:{DB_CONFIG['password']}@{DB_CONFIG['url']}/{DB_CONFIG['name']}"
+    )
+    return engine
+"""
+# lines 27-34 Refere to Issue #1 Above is the original code
 def start_engine():
     engine = create_engine(
         url=f"mysql+mysqlconnector://{DB_CONFIG['username']}:{DB_CONFIG['password']}@{DB_CONFIG['url']}/{DB_CONFIG['name']}"
     )
+    try:
+        start_engine()
+    except Exception as e:
+        print(repr(e))
+    NameError("Check DB_URL Credentials")
+    
     return engine
-
 
 def create_session(engine):
     Session = sessionmaker(bind=engine)
